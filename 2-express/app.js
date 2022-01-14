@@ -12,6 +12,15 @@ app.get("/data", (req, res) => {
   });
   res.send(newProduct);
 });
+
+app.get("/data/:id", (req, res) => {
+  console.log(req.params.id);
+
+  const id = req.params.id;
+  const product = products.find((item) => item.id == id);
+  res.json(product);
+});
+
 app.listen(5000, () => {
   console.log("Server at 5000");
 });
