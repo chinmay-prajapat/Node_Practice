@@ -1,46 +1,21 @@
 const express = require("express");
 const app = express();
-const { products } = require("./data");
-app.get("/", (req, res) => {
-  res.send('<h1>Home Page Page</h1><a href="/api/data">Products</a>');
-});
-app.get("/api/data", (req, res) => {
-  console.log(req);
-  const newProduct = products.map((item) => {
-    const { id, name, image } = item;
-    return { id, name, image };
-  });
-  res.send(newProduct);
-});
 
-app.get("/api/data/:id", (req, res) => {
-  console.log(req.params.id);
-
-  const { id } = req.params;
-  const product = products.find((item) => item.id == id);
-
-  return product
-    ? res.json(product)
-    : res.status(404).send("<h1>Oops no data found</h1>");
+const logger = (req, res, next) => {
+  const method = req.method;
+  const url = req.url;
+  const time = new Date().getFullYear();
+  console.log(method, url, time);
+  next();
+};
+app.get("/", logger, (req, res) => {
+  res.send("<h1>Welcome</h1>");
 });
 
-app.get("/api/v1/query", (req, res) => {
-  const { search, limit } = req.query;
-  let sortedProducts = [...products];
-  if (search) {
-    sortedProducts = sortedProducts.filter((product) =>
-      product.name.startsWith(search)
-    );
-  }
-  if (limit) {
-    sortedProducts = sortedProducts.slice(0, Number(limit));
-  }
-  if (sortedProducts.length < 1) {
-    res.status(200).send("Product not found");
-  }
-  return res.status(200).json(sortedProducts);
+app.get("/about", logger, (req, res) => {
+  res.send("<h1>About</h1>");
 });
 
 app.listen(5000, () => {
-  console.log("Server at 5000");
+  console.log("server running at 5000");
 });
