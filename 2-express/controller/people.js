@@ -10,7 +10,7 @@ const createPerson = (req, res) => {
       .status(400)
       .json({ success: false, msg: "Please provide name value" });
   }
-  res.status(201).json({ success: true, person: name });
+  return res.status(201).json({ success: true, person: name });
 };
 
 const createPersonPostman = (req, res) => {
@@ -20,7 +20,7 @@ const createPersonPostman = (req, res) => {
       .status(400)
       .json({ success: false, msg: "please provide name value" });
   }
-  res.status(201).json({ success: true, data: [...people, name] });
+  return res.status(201).json({ success: true, data: [...people, name] });
 };
 
 const updatePerson = (req, res) => {
@@ -36,7 +36,7 @@ const updatePerson = (req, res) => {
     }
     return person;
   });
-  res.status(200).json({ success: true, data: newPerson });
+  return res.status(200).json({ success: true, data: newPerson });
 };
 
 const deletePerson = (req, res) => {
