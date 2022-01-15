@@ -28,8 +28,17 @@ app.post("/login", (req, res) => {
 app.put("/api/people/:id", (req, res) => {
   const { id } = req.params;
   const { name } = req.body;
-  console.log(id, name);
-  res.send("heelo");
+  const person = people.filter((person) => person.id === Number(id));
+  if (!person) {
+    return res.status(404).json({ success: false, msg: `${id} not found` });
+  }
+  const newPerson = people.map((person) => {
+    if (person.id === Number(id)) {
+      person.name = name;
+    }
+    return person;
+  });
+  res.status(200).json({ success: true, data: newPerson });
 });
 
 app.listen(5000, () => {
