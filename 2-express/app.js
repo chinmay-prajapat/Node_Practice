@@ -49,7 +49,7 @@ app.delete("/api/people/:id", (req, res) => {
   }
 
   const newPeople = people.filter((person) => person.id !== Number(id));
-  return res.status(200).json({ success: true, data: newPeople });
+  return res.status(200).json({ success: true, people: newPeople });
 });
 
 app.listen(5000, () => {
