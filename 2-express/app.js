@@ -8,9 +8,10 @@ app.use(express.static("./methods-public"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.get("/api/people", (req, res) => {
-  res.status(200).json({ success: true, data: people });
+app.post("/login", (req, res) => {
+  res.send(`<h1>Welcome ${req.body.name}</h1>`);
 });
+
 app.post("/api/people", (req, res) => {
   const { name } = req.body;
   if (!name) {
@@ -21,8 +22,8 @@ app.post("/api/people", (req, res) => {
   res.status(201).json({ success: true, person: name });
 });
 
-app.post("/login", (req, res) => {
-  res.send(`<h1>Welcome ${req.body.name}</h1>`);
+app.get("/api/people", (req, res) => {
+  res.status(200).json({ success: true, data: people });
 });
 
 app.put("/api/people/:id", (req, res) => {
